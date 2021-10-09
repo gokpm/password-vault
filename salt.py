@@ -1,4 +1,5 @@
 import os
+from base64 import b64encode
 from base64 import urlsafe_b64encode
 from database_operations import *
 from cryptography.fernet import Fernet
@@ -28,3 +29,12 @@ def create_salt():
                 new_encrypted_database_dictionary.update({new_key_record:new_value_record})        
     write(r'database.json', new_encrypted_database_dictionary)
     return key
+
+def get_key(filepath: str) -> bytes:
+    salt = read(filepath).encode()
+    key = Fernet(salt)
+    return key
+
+def generate_key():
+    salt = b64encode(os.urandom(4096))
+    
