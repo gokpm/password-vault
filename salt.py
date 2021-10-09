@@ -45,6 +45,16 @@ def generate_key(password):
     key = Fernet(password)
     return key
 
-def lock():
+def lock(message, key) -> str:
+    message = message.encode()
+    encrypted_message = key.encrypt(message)
+    encrypted_message = encrypted_message.decode()
+    return encrypted_message
+
+def unlock(message, key) -> str:
+    message = message.encode()
+    decrypted_message = key.decrypt(message)
+    decrypted_message = decrypted_message.decode()
+    return decrypted_message
     
     
