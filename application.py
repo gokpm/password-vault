@@ -23,7 +23,7 @@ def login():
                 password = input('Password: ')
                 re_password = input('Re-enter Password: ')
                 if password == re_password:
-                    pass
+                    salt = 
                 else:
                     sys.exit()
             if choice == 'n':

@@ -35,12 +35,13 @@ def get_key(filepath: str) -> bytes:
     key = Fernet(salt)
     return key
 
-def generate_key():
-    salt = read_from_key().encode('utf-8')
+def generate_key(password):
+    salt = b64encode(os.urandom(4096))
     kdf = PBKDF2HMAC(algorithm=hashes.SHA256(),
                      length=32,
                      salt=salt,
                      iterations=1000000)
-    password = base64.urlsafe_b64encode(kdf.derive(password.encode()))
-    tunnel = Fernet(password)
+    password = urlsafe_b64encode(kdf.derive(password.encode()))
+    key = Fernet(password)
+    return key
     
