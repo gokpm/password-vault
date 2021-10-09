@@ -1,10 +1,10 @@
 import os
 import json
 
-def create(filepath: str) -> bool:
+def create(filepath: str, data: str or dict) -> bool:
     flag = False
     if not os.path.isfile(filepath):
-        write(filepath, None)
+        write(filepath, data)
         flag = True
     return flag
 
