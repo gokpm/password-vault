@@ -3,7 +3,7 @@ from menu import *
 from salt import *
 from database_operations import *
 
-def login():
+def login() -> None:
     key = get_key(r'application_key.json')
     choice = login_menu()
     if choice == 'l':
@@ -20,24 +20,30 @@ def login():
         else:
             choice = new_user()
             if choice == 'y':
-                user_key = b64encode(os.urandom(16))
+                user_key = b64encode(os.urandom(16)).decode()
                 print('Setup the following key in the Google Authenticator app')
-                print('key: {0}'.format(user_key.decode()))
+                print('key: {0}'.format(user_key))
                 choice = navigation()
-                if choice()
-                vault_key = b64encode(os.urandom(16))
-                vault_name = r'{0}.json'.format(vault_key.decode())
-                username = lock(username, key)
-                user_key = lock(user_key, key)
-                vault_name = lock(vault_name, key)
-                database.update({username:[user_key, vault_name]})
-                write(r'database.json', database)
+                if choice == 'c':
+                    vault_key = b64encode(os.urandom(16))
+                    vault_name = r'{0}.json'.format(vault_key.decode())
+                    create(vault_name, {})
+                    username = lock(username, key)
+                    user_key = lock(user_key, key)
+                    vault_name = lock(vault_name, key)
+                    database.update({username:[user_key, vault_name]})
+                    write(r'database.json', database)
+                if choice == 'a':
+                    return
+                if choice == 'e':
+                    sys.exit()
             if choice == 'n':
-                break
+                return
             if choice == 'e':
                 sys.exit()
     if choice == 'e':
         sys.exit()
+    return
         
     
     
