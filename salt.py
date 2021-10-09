@@ -44,4 +44,7 @@ def generate_key(password):
     password = urlsafe_b64encode(kdf.derive(password.encode()))
     key = Fernet(password)
     return key
+
+def lock():
+    
     

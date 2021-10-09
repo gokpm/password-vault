@@ -20,10 +20,11 @@ def login():
         else:
             choice = new_user()
             if choice == 'y':
-                password = input('Password: ')
-                re_password = input('Re-enter Password: ')
-                if password == re_password:
-                    salt = 
+                user_key = b64encode(os.urandom(16))
+                print('Setup the following key in the Google Authenticator app')
+                print('key: {0}'.format(user_key.decode()))
+                vault_key = b64encode(os.urandom(16))
+                vault_name = r'{0}.json'.format(vault_key.decode())
                 else:
                     sys.exit()
             if choice == 'n':
