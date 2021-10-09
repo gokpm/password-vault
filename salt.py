@@ -4,7 +4,10 @@ from database_operations import *
 
 def create_salt() -> bytes:
     salt = b64encode(os.urandom(4096))
-    flag = create(r'application_key.json', salt.decode('utf-8'))
+    flag = create(r'application_key.json', salt.decode())
+    if not flag:
+        old_salt = read(r'application_key.json').encode()
+        write(r'application_key.json', salt.decode())
     return salt
 
-print(create_salt())
+create_salt()
