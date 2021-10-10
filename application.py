@@ -12,7 +12,6 @@ def login() -> None:
         database = read(r'database.json')
         flag = False
         for key_record in database:
-            print(unlock(key_record, key))
             decrypted_key_record = unlock(key_record, key)
             if username == decrypted_key_record:
                 flag = True
