@@ -19,5 +19,5 @@ def new_user() -> str:
 def navigation() -> str:
     choice = None
     while choice not in ['c', 'a', 'e']:
-        choice = (input('c -> continue, a -> abort, e -> exit')).lower()
+        choice = (input('c -> continue, a -> abort, e -> exit\n')).lower()
     return choice
