@@ -2,6 +2,7 @@ import sys
 from menu import *
 from salt import *
 from database_operations import *
+from authenticator import *
 
 def login() -> None:
     key = get_key(r'application_key.json')
@@ -21,8 +22,8 @@ def login() -> None:
             choice = new_user()
             if choice == 'y':
                 user_key = b64encode(os.urandom(16)).decode()
-                print('Setup the following key in the Google Authenticator app')
-                print('key: {0}'.format(user_key))
+                print('Scan the following QR Code with Google Authenticator')
+                get_qr('Vault', user_key)
                 choice = navigation()
                 if choice == 'c':
                     vault_key = b64encode(os.urandom(16))
