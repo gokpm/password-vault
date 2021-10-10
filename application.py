@@ -12,7 +12,8 @@ def login() -> None:
         database = read(r'database.json')
         flag = False
         for key_record in database:
-            decrypted_key_record == (key.decrypt(key_record.encode())).decode()
+            print(unlock(key_record, key))
+            decrypted_key_record = unlock(key_record, key)
             if username == decrypted_key_record:
                 flag = True
                 break
@@ -26,7 +27,7 @@ def login() -> None:
                 get_qr('Vault', user_key)
                 choice = navigation()
                 if choice == 'c':
-                    vault_key = b64encode(os.urandom(16))
+                    vault_key = b32encode(os.urandom(16))
                     vault_name = r'{0}.json'.format(vault_key.decode())
                     create(vault_name, {})
                     username = lock(username, key)
