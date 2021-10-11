@@ -1,5 +1,6 @@
 import sys
 from tkinter import Tk
+from getpass import getpass
 from time import sleep
 from menu import *
 from salt import *
@@ -20,7 +21,7 @@ def copy(text_to_copy):
     return
 
 def store(vault, database, secret):
-    app = input('App: ')
+    app = getpass('App: ')
     for key in database:
         key = unlock(key, secret)
         if app == key:
@@ -31,22 +32,29 @@ def store(vault, database, secret):
     if match:
         flag = False
         choice = update_menu()
+        if choice == 'u':
+            username = lock(getpass('Username: '), secret)
+            password = lock(getpass('Password: '), secret)
+            database.update({app: [username, password]})
+            write(vault, database)
+            choice = None
+            flag = True
         if choice == 'b':
             choice = None
-            return
-        if choice == 'u':
-            choice = None
+            return flag, choice
     else:
         app = lock(app, secret)
-        username = lock(input('Username: '), secret)
-        password = lock(input('Password: '), secret)
+        username = lock(getpass('Username: '), secret)
+        password = lock(getpass('Password: '), secret)
         database.update({app: [username, password]})
         write(vault, database)
+        choice = None
         flag = True
     return flag, choice
 
 def retrieve(database, secret):
-    app = input('App: ')
+    choice = None
+    app = getpass('App: ')
     for key in database:
         if app == unlock(key, secret):
             match = True
