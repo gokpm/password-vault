@@ -74,10 +74,9 @@ def update(vault, database, secret):
     match, key = check_database(app, database, secret)
     flag = False
     if match:
-        app = lock(app, secret)
         username = lock(getpass('Username: '), secret)
         password = lock(getpass('Password: '), secret)
-        database.update({app: [username, password]})
+        database.update({key: [username, password]})
         write(vault, database)
         choice = None
         flag = True
