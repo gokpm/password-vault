@@ -97,6 +97,7 @@ def update(vault, database, secret):
     return flag, choice
 
 def check_database(app, database, secret):
+    key = None
     match = False
     for key in database:
         key = unlock(key, secret)
