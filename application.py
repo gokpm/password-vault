@@ -47,7 +47,7 @@ async def login() -> None:
         else:
             choice = new_user()
             if choice == 'y':
-                user_key = b32encode(os.urandom(16)).decode()
+                user_key = b32encode(os.urandom(20)).decode()
                 print('Scan the following QR Code with Google Authenticator')
                 get_qr(username, user_key)
                 choice = navigation()
