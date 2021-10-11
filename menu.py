@@ -29,6 +29,13 @@ def update_menu():
         choice = (input('u -> update, r -> retrieve, b -> back, l -> logout, e -> exit\n'))
     return choice
 
+def store_menu():
+    choice = None
+    print('App does not exist. Store it first.')
+    while choice not in ['s', 'b', 'l', 'e']:
+        choice = (input('s -> store, b -> back, l -> logout, e -> exit\n'))
+    return choice
+
 def final_menu():
     choice = None
     while choice not in ['u', 'p', 'b', 'l', 'e']:

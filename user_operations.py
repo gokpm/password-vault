@@ -22,13 +22,7 @@ def copy(text_to_copy):
 
 def store(vault, database, secret):
     app = getpass('App: ')
-    for key in database:
-        key = unlock(key, secret)
-        if app == key:
-            match = True
-            break
-        else:
-            match = False
+    match = check_database(app, database, secret)
     if match:
         flag = False
         choice = update_menu()
@@ -53,14 +47,8 @@ def store(vault, database, secret):
     return flag, choice
 
 def retrieve(database, secret):
-    choice = None
     app = getpass('App: ')
-    for key in database:
-        if app == unlock(key, secret):
-            match = True
-            break
-        else:
-            match = False
+    match = check_database(app, database, secret)
     if match:
         while True:
             choice = final_menu()
@@ -76,5 +64,43 @@ def retrieve(database, secret):
                 continue
             return choice
     else:
+        choice = None
         print('No apps found')
     return choice
+
+def update(vault, database, secret):
+    app = getpass('App: ')
+    match = check_database(app, database, secret)
+    flag = False
+    if match:
+        username = lock(getpass('Username: '), secret)
+        password = lock(getpass('Password: '), secret)
+        database.update({app: [username, password]})
+        write(vault, database)
+        choice = None
+        flag = True
+    else:
+        choice = store_menu()
+        if choice == 's':
+            username = lock(getpass('Username: '), secret)
+            password = lock(getpass('Password: '), secret)
+            database.update({app: [username, password]})
+            write(vault, database)
+            choice = None
+            flag = True
+        if choice == 'b':
+            choice = None
+            return flag, choice
+    return flag, choice
+
+def check_database(app, database, secret):
+    match = False
+    for key in database:
+        key = unlock(key, secret)
+        if app == key:
+            match = True
+            break
+        else:
+            pass
+    return match
+    
