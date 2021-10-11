@@ -25,7 +25,7 @@ def get_qr(username, key):
                        box_size=4,
                        border=4)
 
-    qr.add_data('otpauth://totp/Vault:{0}&secret={1}&issuer=Vault'.format(username, key))
+    qr.add_data('otpauth://totp/Vault:{0}?secret={1}&issuer=Vault'.format(username, key))
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
     img.show()
