@@ -21,3 +21,19 @@ def navigation() -> str:
     while choice not in ['c', 'a', 'e']:
         choice = (input('c -> continue, a -> abort, e -> exit\n')).lower()
     return choice
+
+def update_menu():
+    choice = None
+    print('App already present, use update')
+    while choice not in ['u', 'b', 'l', 'e']:
+        choice = (input('u -> update, b -> back, l -> logout, e -> exit\n'))
+    return choice
+
+def final_menu():
+    choice = None
+    while choice not in ['u', 'p', 'b', 'l', 'e']:
+        choice = (input('u -> username, p -> password, b -> back, l -> logout, e -> exit\n'))
+    return choice
+    
+
+
