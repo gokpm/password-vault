@@ -1,6 +1,23 @@
 import sys
+from tkinter import Tk
+from time import sleep
 from menu import *
 from salt import *
+
+def copy(text_to_copy):
+    r = Tk()
+    r.withdraw()
+    r.clipboard_clear()
+    r.clipboard_append(text_to_copy)
+    r.update()
+    sleep(5)
+    print('you have 5 seconds to paste it')
+    r.clipboard_clear()
+    r.clipboard_append('')
+    r.update()
+    r.destroy()
+    print('destroyed')
+    return
 
 def store(vault, database, secret):
     app = input('App: ')
@@ -41,12 +58,12 @@ def retrieve(database, secret):
             choice = final_menu()
             if choice == 'u':
                 decrypted_username = unlock(database[key][0], secret)
-                print(decrypted_username)
+                copy(decrypted_username)
                 choice = None
                 continue
             if choice == 'p':
                 decrypted_password = unlock(database[key][1], secret)
-                print(decrypted_password)
+                copy(decrypted_password)
                 choice = None
                 continue
             return choice
