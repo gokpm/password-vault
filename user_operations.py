@@ -22,11 +22,12 @@ def copy(text_to_copy):
 
 def store(vault, database, secret):
     app = getpass('App: ')
-    match = check_database(app, database, secret)
+    match, key = check_database(app, database, secret)
     if match:
         flag = False
         choice = update_menu()
         if choice == 'u':
+            app = lock(app, secret)
             username = lock(getpass('Username: '), secret)
             password = lock(getpass('Password: '), secret)
             database.update({app: [username, password]})
@@ -48,7 +49,7 @@ def store(vault, database, secret):
 
 def retrieve(database, secret):
     app = getpass('App: ')
-    match = check_database(app, database, secret)
+    match, key = check_database(app, database, secret)
     if match:
         while True:
             choice = final_menu()
@@ -70,9 +71,10 @@ def retrieve(database, secret):
 
 def update(vault, database, secret):
     app = getpass('App: ')
-    match = check_database(app, database, secret)
+    match, key = check_database(app, database, secret)
     flag = False
     if match:
+        app = lock(app, secret)
         username = lock(getpass('Username: '), secret)
         password = lock(getpass('Password: '), secret)
         database.update({app: [username, password]})
@@ -82,6 +84,7 @@ def update(vault, database, secret):
     else:
         choice = store_menu()
         if choice == 's':
+            app = lock(app, secret)
             username = lock(getpass('Username: '), secret)
             password = lock(getpass('Password: '), secret)
             database.update({app: [username, password]})
@@ -102,5 +105,5 @@ def check_database(app, database, secret):
             break
         else:
             pass
-    return match
+    return match, key
     

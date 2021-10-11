@@ -35,7 +35,7 @@ async def login() -> None:
                     if choice == 's':
                         flag, choice = store(vault_key, user_database, secret)                             
                     if choice == 'u':
-                        continue
+                        flag, choice = update(vault_key, user_database, secret)
                     if choice == 'r':
                         choice = retrieve(user_database, secret)
                     if choice == 'l':
