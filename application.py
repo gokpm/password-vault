@@ -1,10 +1,11 @@
 import sys
+import asyncio
 from menu import *
 from salt import *
 from database_operations import *
 from authenticator import *
 
-def login() -> None:
+async def login() -> None:
     key = get_key(r'application_key.json')
     choice = login_menu()
     if choice == 'l':
@@ -14,10 +15,24 @@ def login() -> None:
         for key_record in database:
             decrypted_key_record = unlock(key_record, key)
             if username == decrypted_key_record:
+                user_key = unlock(database[key_record][0], key)
+                vault_key = unlock(database[key_record][1], key)
                 flag = True
                 break
         if flag:
-            pass
+            tasks = []
+            tasks.append(asyncio.create_task(get_totp(user_key)))
+            tasks.append(asyncio.create_task(input_otp()))
+            await asyncio.wait(tasks)
+            flag = tasks[1].result()
+            if flag:
+                choice = main_menu()
+                if choice == 'l':
+                    return
+                if choice == 'e':
+                    sys.exit()
+            else:
+                return
         else:
             choice = new_user()
             if choice == 'y':
