@@ -100,8 +100,8 @@ def check_database(app, database, secret):
     key = None
     match = False
     for key in database:
-        key = unlock(key, secret)
-        if app == key:
+        decrypted_key = unlock(key, secret)
+        if app == decrypted_key:
             match = True
             break
         else:
