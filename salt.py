@@ -1,6 +1,7 @@
 import os
 from base64 import b64encode
 from base64 import b32encode
+from base64 import b16encode
 from base64 import urlsafe_b64encode
 from database_operations import *
 from cryptography.fernet import Fernet

@@ -38,7 +38,7 @@ async def login() -> None:
             if choice == 'y':
                 user_key = b32encode(os.urandom(16)).decode()
                 print('Scan the following QR Code with Google Authenticator')
-                get_qr('Vault', user_key)
+                get_qr(username, user_key)
                 choice = navigation()
                 if choice == 'c':
                     vault_key = b32encode(os.urandom(16))
