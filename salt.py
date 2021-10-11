@@ -9,7 +9,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 def create_salt():
     new_encrypted_database_dictionary = {}
-    salt = urlsafe_b64encode(os.urandom(32))
+    salt = urlsafe_b64encode(os.urandom(36))
     key = Fernet(salt)
     flag_key = create(r'application_key.json', salt.decode())
     if flag_key:
