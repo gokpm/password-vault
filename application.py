@@ -52,7 +52,7 @@ async def login() -> None:
                 get_qr(username, user_key)
                 choice = navigation()
                 if choice == 'c':
-                    user_salt = urlsafe_b64encode(os.urandom(36)).decode()
+                    user_salt = urlsafe_b64encode(os.urandom(32)).decode()
                     vault_key = b32encode(os.urandom(20))
                     vault_name = r'{0}.json'.format(vault_key.decode())
                     create(vault_name, {})
