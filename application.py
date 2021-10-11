@@ -29,30 +29,31 @@ async def login() -> None:
             if flag:
                 secret = Fernet(user_salt.encode())
                 user_database = read(vault_key)
-                choice = main_menu()
-                if choice == 's':
-                    app = lock(input('App: '), secret)
-                    username = lock(input('Username: '), secret)
-                    password = lock(input('Password: '), secret)
-                    user_database.update({app: [username, password]})
-                    write(vault_key, user_database)
-                    return
-                if choice == 'u':
-                    return
-                if choice == 'r':
-                    app = input('App: ')
-                    for key_record in user_database:
-                        decrypted_app = unlock(key_record, secret)
-                        if app == decrypted_app:
-                            decrypted_username = unlock(user_database[key_record][0], secret)
-                            decrypted_password = unlock(user_database[key_record][1], secret)
-                            print(decrypted_username)
-                            print(decrypted_password)
-                    return
-                if choice == 'l':
-                    return
-                if choice == 'e':
-                    sys.exit()
+                while True:
+                    choice = main_menu()
+                    if choice == 's':
+                        app = lock(input('App: '), secret)
+                        username = lock(input('Username: '), secret)
+                        password = lock(input('Password: '), secret)
+                        user_database.update({app: [username, password]})
+                        write(vault_key, user_database)
+                        continue
+                    if choice == 'u':
+                        continue
+                    if choice == 'r':
+                        app = input('App: ')
+                        for key_record in user_database:
+                            decrypted_app = unlock(key_record, secret)
+                            if app == decrypted_app:
+                                decrypted_username = unlock(user_database[key_record][0], secret)
+                                decrypted_password = unlock(user_database[key_record][1], secret)
+                                print(decrypted_username)
+                                print(decrypted_password)
+                        continue
+                    if choice == 'l':
+                        return
+                    if choice == 'e':
+                        sys.exit()
             else:
                 return
         else:
