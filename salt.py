@@ -26,10 +26,12 @@ def create_salt():
             for key_record in old_encrypted_database_dictionary:
                 value0_record = old_encrypted_database_dictionary[key_record][0]
                 value1_record = old_encrypted_database_dictionary[key_record][1]
+                value2_record = old_encrypted_database_dictionary[key_record][2]
                 new_key_record = (key.encrypt(old_key.decrypt(key_record.encode()))).decode()
                 new_value0_record = (key.encrypt(old_key.decrypt(value0_record.encode()))).decode()
-                new_value1_record = (key.encrypt(old_key.decrypt(value1_record.encode()))).decode() 
-                new_encrypted_database_dictionary.update({new_key_record: [new_value0_record, new_value1_record]})        
+                new_value1_record = (key.encrypt(old_key.decrypt(value1_record.encode()))).decode()
+                new_value2_record = (key.encrypt(old_key.decrypt(value2_record.encode()))).decode()
+                new_encrypted_database_dictionary.update({new_key_record: [new_value0_record, new_value1_record, new_value2_record]})        
     write(r'database.json', new_encrypted_database_dictionary)
     return key
 
